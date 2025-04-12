@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rate This Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background-color: #f0f4f8;
+    }
+    h1 {
+      color: #333;
+    }
+    .buttons {
+      margin: 20px 0;
+    }
+    button {
+      font-size: 18px;
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .average {
+      margin-top: 30px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rate This Website</h1>
+  <p>Click a number to give your rating (1 to 10):</p>
+  <div class="buttons" id="vote-buttons"></div>
+
+  <div class="average" id="average-display">
+    Average Score: N/A
+  </div>
+
+  <script>
+    const voteButtons = document.getElementById('vote-buttons');
+    const averageDisplay = document.getElementById('average-display');
+    const votes = [];
+
+    // Create buttons 1-10
+    for (let i = 1; i <= 10; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.onclick = () => {
+        votes.push(i);
+        updateAverage();
+      };
+      voteButtons.appendChild(btn);
+    }
+
+    function updateAverage() {
+      if (votes.length === 0) {
+        averageDisplay.textContent = "Average Score: N/A";
+        return;
+      }
+      const total = votes.reduce((a, b) => a + b, 0);
+      const avg = (total / votes.length).toFixed(1);
+      averageDisplay.textContent = `Average Score: ${avg} (${votes.length} vote${votes.length > 1 ? 's' : ''})`;
+    }
+  </script>
+</body>
+</html>
