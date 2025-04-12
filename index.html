@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Rate This Website</title>
+  <title>Rate This Performance</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -35,10 +35,15 @@
       font-weight: bold;
       color: #222;
     }
+    .thank-you {
+      font-size: 18px;
+      margin-top: 20px;
+      color: green;
+    }
   </style>
 </head>
 <body>
-  <h1>Rate This Website</h1>
+  <h1>Rate This Performance</h1>
   <p>Click a number to give your rating (1 to 10):</p>
   <div class="buttons" id="vote-buttons"></div>
 
@@ -46,20 +51,34 @@
     Average Score: N/A
   </div>
 
+  <div class="thank-you" id="thank-you-message"></div>
+
   <script>
     const voteButtons = document.getElementById('vote-buttons');
     const averageDisplay = document.getElementById('average-display');
+    const thankYouMessage = document.getElementById('thank-you-message');
     const votes = [];
 
-    // Create buttons 1-10
+    let hasVoted = false;
+
     for (let i = 1; i <= 10; i++) {
       const btn = document.createElement('button');
       btn.textContent = i;
       btn.onclick = () => {
+        if (hasVoted) return;
+
         votes.push(i);
+        hasVoted = true;
         updateAverage();
+        thankYouMessage.textContent = "Thank you for your vote!";
+        disableButtons();
       };
       voteButtons.appendChild(btn);
+    }
+
+    function disableButtons() {
+      const allButtons = voteButtons.querySelectorAll('button');
+      allButtons.forEach(btn => btn.disabled = true);
     }
 
     function updateAverage() {
